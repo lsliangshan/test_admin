@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title><%=appName%> | Responsive Web Admin App with AngularJS And Bootstrap</title>
+    <meta name="description"
+          content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <!--<link rel="stylesheet" href="/Static/bower_components/animate.css/animate.css" type="text/css" />-->
+    <link rel="stylesheet" href="/Static/bower_components/bootstrap/dist/css/bootstrap.css" type="text/css"/>
+    <!--<link rel="stylesheet" href="/Static/bower_components/bootstrap-additions/dist/bootstrap-additions.css" type="text/css" />-->
+    <!--<link rel="stylesheet" href="/Static/bower_components/font-awesome/css/font-awesome.css" type="text/css" />-->
+    <!--<link rel="stylesheet" href="/Static/styles/themify-icons.css" type="text/css" />-->
+    <link rel="stylesheet" href="/Static/styles/app.css" type="text/css"/>
+    <style>
+        body {
+            background-color: #393939;
+        }
+        .container {
+            width: 100%;
+            padding: 0;
+
+            opacity: 0;
+            -webkit-transform: translate3d(0, 50px, 0);
+            -moz-transform: translate3d(0, 50px, 0);
+            -o-transform: translate3d(0, 50px, 0);
+            transform: translate3d(0, 50px, 0);
+            -webkit-transition: opacity .5s ease-in-out, -webkit-transform .5s ease-in-out;
+            -moz-transition: opacity .5s ease-in-out, -moz-transform .5s ease-in-out;
+            -o-transition: opacity .5s ease-in-out, -o-transform .5s ease-in-out;
+            transition: opacity .5s ease-in-out, transform .5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="center-block w-auto-xs m-b-lg" style="margin-top: 15%; padding: 16px 32px; background-color: whitesmoke; width: 40%; border-radius: 8px;">
+        <div class="text-2x m-v-lg text-primary"><i class="glyphicon glyphicon-th-large text-xl"></i> <%=appName%></div>
+        <div class="m-b text-sm">
+            请登录您的 <%=appName%> 账号
+        </div>
+        <form name="form" action="/Public/signin" method="post">
+            <div class="form-group m-b-xs">
+                <label class="hide">Email</label>
+                <input type="email" name="email" placeholder="您的邮箱" class="form-control" ng-model="user.email" required>
+            </div>
+            <div class="form-group m-b-xs">
+                <label class="hide">Password</label>
+                <input type="password" name="password" placeholder="您的密码" class="form-control" ng-model="user.password"
+                       required>
+            </div>
+            <div class="checkbox no-margin">
+                <label class="ui-checks">
+                    <input type="checkbox"><i></i> 记住我
+                    <a href="/Public/forgotPassword">忘记密码?</a>
+                </label>
+            </div>
+            <button type="submit" class="btn btn-info p-h-md m-v-sm">登录</button>
+            <p class="m-v-sm text-sm">还没有账号? <a href="/Public/signup">注册</a></p>
+        </form>
+    </div>
+</div>
+
+<div class="text-xs" style="position: fixed; bottom: 0; width: 100%; text-align: center; padding: 8px 0; color: whitesmoke; background-color: #393939;">
+    <div class="hidden-xs hidden-sm text-muted">
+        <strong><%=appName%></strong> - Built with AngularJS &amp; Bootstrap &copy; Copyright 2014
+    </div>
+</div>
+</body>
+<script>
+    window.onload = function () {
+        setTimeout(function () {
+            var _target = document.querySelector(".container");
+            _target.style.opacity = 1;
+            _target.style.webkitTransform = "translate3d(0, 0, 0)";
+            _target.style.mozTransform = "translate3d(0, 0, 0)";
+            _target.style.oTransform = "translate3d(0, 0, 0)";
+            _target.style.transform = "translate3d(0, 0, 0)";
+        }, 20);
+    };
+</script>
+</html>

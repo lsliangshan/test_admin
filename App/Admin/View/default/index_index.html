@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title><%=appName%> | Responsive Web Admin App with AngularJS And Bootstrap</title>
+    <meta name="description" content="app, web app, responsive, responsive layout, admin, admin panel, admin dashboard, flat, flat ui, ui kit, AngularJS, ui route, charts, widgets, components" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="/Static/bower_components/animate.css/animate.css" type="text/css" />
+    <link rel="stylesheet" href="/Static/bower_components/bootstrap/dist/css/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="/Static/bower_components/bootstrap-additions/dist/bootstrap-additions.css" type="text/css" />
+    <link rel="stylesheet" href="/Static/bower_components/angular-motion/dist/angular-motion.css" type="text/css" />
+    <link rel="stylesheet" href="/Static/bower_components/font-awesome/css/font-awesome.css" type="text/css" />
+    <link rel="stylesheet" href="/Static/bower_components/angular-loading-bar/build/loading-bar.css" type="text/css" />
+    <link rel="stylesheet" href="/Static/styles/themify-icons.css" type="text/css" />
+    <link rel="stylesheet" href="/Static/styles/font.css" type="text/css" />
+    <link rel="stylesheet" href="/Static/styles/app.css" type="text/css" />
+    <style>
+        .container {
+            width: 100%;
+            padding: 0;
+
+            opacity: 0;
+            -webkit-transform: translate3d(0, 50px, 0);
+            -moz-transform: translate3d(0, 50px, 0);
+            -o-transform: translate3d(0, 50px, 0);
+            transform: translate3d(0, 50px, 0);
+            -webkit-transition: opacity .5s ease-in-out, -webkit-transform .5s ease-in-out;
+            -moz-transition: opacity .5s ease-in-out, -moz-transform .5s ease-in-out;
+            -o-transition: opacity .5s ease-in-out, -o-transform .5s ease-in-out;
+            transition: opacity .5s ease-in-out, transform .5s ease-in-out;
+        }
+        /*遮罩层*/
+        #api-lsBack {
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 9999;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            opacity: 1;
+            display: block;
+
+            -webkit-transition: opacity .3s ease-in-out;
+            -moz-transition: opacity .3s ease-in-out;
+            -o-transition: opacity .3s ease-in-out;
+            transition: opacity .3s ease-in-out;
+        }
+        /*加载动画*/
+        #api-lsLoading {
+            position: fixed;
+            z-index: 99999;
+            width: 100%;
+            height: auto;
+            left: 0;
+            top: 45%;
+            text-align: center;
+            display: block;
+            opacity: 1;
+
+            -webkit-transition: opacity .5s ease-in-out;
+            -moz-transition: opacity .5s ease-in-out;
+            -o-transition: opacity .5s ease-in-out;
+            transition: opacity .5s ease-in-out;
+
+            /*-webkit-transform: translate3d(0, -1000px, 0);*/
+            /*-moz-transform: translate3d(0, -1000px, 0);*/
+            /*-o-transform: translate3d(0, -1000px, 0);*/
+            /*transform: translate3d(0, -1000px, 0);*/
+
+            /*-webkit-transition: -webkit-transform .5s cubic-bezier(0.645,0.045,0.355,1);*/
+            /*-moz-transition: -moz-transform .5s cubic-bezier(0.645,0.045,0.355,1);*/
+            /*-o-transition: -o-transform .5s cubic-bezier(0.645,0.045,0.355,1);*/
+            /*transition: transform .5s cubic-bezier(0.645,0.045,0.355,1);*/
+        }
+        #api-lsLoading img {
+            width: 48px;
+            height: 48px;
+        }
+    </style>
+</head>
+<body ng-app="app">
+
+    <!--<header id="header" class="app-header navbar bg-primary lt" role="menu" ng-include="'/Static/header.html'" style="position: fixed; width: 100%; left: 0; top: 0;"></header>-->
+<div ui-view class="app" ng-controller="MainCtrl">
+    <!-- header -->
+    <header id="header" class="app-header navbar {{app.settings.headerColor}}" role="menu">
+        <!-- navbar header -->
+        <div class="navbar-header" ng-class="{'box-shadow-inset dk':app.settings.headerShadow}">
+            <button class="pull-right visible-xs" ng-click="app.navbarCollapse = !app.navbarCollapse">
+                <i class="ti-settings"></i>
+            </button>
+            <button class="pull-right visible-xs" ng-click="app.asideCollapse = !app.asideCollapse">
+                <i class="ti-menu"></i>
+            </button>
+            <!-- brand -->
+            <a class="navbar-brand text-lt"
+               bs-aside="aside"
+               data-template="/Static/views/partials/aside.tpl.html"
+               data-placement="top"
+               data-animation="am-slide-top aside-open-backdrop"
+               data-container="body"
+            >
+                <i class="pull-right ti-arrow-circle-down text-sm m-v-xs m-l-xs"></i>
+                <i class="glyphicon glyphicon-th-large text-md"></i>
+                <img src="/Static/images/logo.png" alt="." class="hide">
+                <span class="hidden-folded m-l-xs">{{app.name}}<sup class="text-xs font-thin">{{app.version}}</sup></span>
+            </a>
+            <!-- / brand -->
+        </div>
+        <!-- / navbar header -->
+
+        <!-- navbar collapse -->
+        <div class="navbar-collapse hidden-xs" ng-class="{'show animated fadeIn' : app.navbarCollapse}">
+            <!-- nav -->
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <a data-pjax href="/Public/home">
+                        <i class="fa fa-fw fa-home"></i>
+                        <span>首页</span>
+                    </a>
+                </li>
+                <!--<li>-->
+                    <!--<a ui-sref="mail.inbox">-->
+                        <!--<i class="fa fa-fw fa-envelope"></i>-->
+                        <!--<span translate="header.navbar.EMAIL">Email</span>-->
+                    <!--</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a ui-sref="ui.component.arrow">-->
+                        <!--<i class="fa fa-fw fa-suitcase"></i>-->
+                        <!--<span translate="header.navbar.UIKITS">UI Kits</span>-->
+                    <!--</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a ui-sref="page.profile">-->
+                        <!--<i class="fa fa-fw fa-file"></i>-->
+                        <!--<span translate="header.navbar.PAGES">Pages</span>-->
+                    <!--</a>-->
+                <!--</li>-->
+            </ul>
+            <!-- / nav -->
+
+            <!-- nabar right -->
+            <ul class="nav navbar-nav navbar-right m-r-n">
+                <li>
+                    <script type="text/ng-template" id="settings">
+                        <div tabindex="-1" class="p dropdown-menu bg-white bg-inherit no-b-t no-margin w-sm" role="menu">
+                            <p class="clearfix">
+                                <a class="inline {{color}} p-xs m-h-xs m-v-xs pull-left no-borders" ng-repeat="color in options.headerColor" ng-click="setHeaderColor(color)">
+                                </a>
+                            </p>
+                            <div class="line b-b b-light m-h-xs"></div>
+                            <p class="clearfix">
+                                <a class="inline {{color}} p-xs m-h-xs m-v-xs pull-left no-borders" ng-repeat="color in options.asideColor" ng-click="setAsideColor(color)">
+                                </a>
+                            </p>
+                            <div class="line b-b b-light m-h-xs"></div>
+                            <!--<div class="m-v-xs">-->
+                                <!--<label class="ui-checks m-h-xs no-margin">-->
+                                    <!--<input type="checkbox" ng-model="app.settings.headerFixed"><i></i> Header fixed-->
+                                <!--</label>-->
+                            <!--</div>-->
+                            <div class="m-v-xs">
+                                <label class="ui-checks m-h-xs no-margin">
+                                    <input type="checkbox" ng-model="app.settings.headerShadow"><i></i> Header shadow
+                                </label>
+                            </div>
+                            <div class="m-v-xs">
+                                <label class="ui-checks m-h-xs no-margin">
+                                    <input type="checkbox" ng-model="app.settings.asideTop"><i></i> Aside top
+                                </label>
+                            </div>
+                        </div>
+                    </script>
+                    <a href bs-dropdown="dropdown" data-animation="am-collapse" data-template="settings">
+                        <i class="glyphicon glyphicon-cog"></i>
+                        <span class="visible-xs-inline">Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href
+                       bs-aside="aside"
+                       data-template="/Static/views/partials/aside.tpl.chat.html"
+                       data-placement="right"
+                       data-animation="am-slide-right aside-open-inner modal-open"
+                       data-container="body"
+                    >
+                        <i class="glyphicon glyphicon-comment"></i>
+                        <b class="badge badge-xs bg-warning up">3</b>
+                        <span class="visible-xs-inline">Notifications</span>
+                    </a>
+                </li>
+                <li class="hidden-xs hidden-sm">
+                    <a href ui-fullscreen title="全屏显示"><i class="glyphicon glyphicon-resize-vertical"></i></a>
+                </li>
+                <li>
+                    <a href class="clear no-padding-h" bs-dropdown="dropdown" data-animation="am-collapse" data-template="user">
+                        <img src="/Static/images/a0.jpg" alt="..." class="navbar-img pull-right">
+                        <span class="hidden-sm m-l"><%=sessionInfo.username%></span>
+                        <b class="caret m-h-xs hidden-sm"></b>
+                    </a>
+                    <script type="text/ng-template" id="user">
+                        <ul class="dropdown-menu pull-right no-b-t">
+                            <li>
+                                <a data-pjax href="/Public/profile">个人中心</a>
+                            </li>
+                            <li>
+                                <a data-pjax href="/Public/settings">设置</a>
+                            </li>
+                            <li class="divider">
+                            <li>
+                                <a href="/Public/lockme">锁定账号</a>
+                            </li>
+                            <li>
+                                <a href="/Public/loginout">退出登录</a>
+                            </li>
+                        </ul>
+                    </script>
+                </li>
+            </ul>
+            <!-- / navbar right -->
+
+            <!-- search form -->
+            <form class="navbar-form navbar-form-sm navbar-right visible-xs" role="search">
+                <div class="form-group">
+                    <div class="input-group">
+              <span class="input-group-btn">
+                <button type="submit" class="btn btn-sm no-bg btn-icon no-shadow no-padder"><i class="ti-search"></i></button>
+              </span>
+                        <input type="text" ng-model="selected" typeahead="state for state in states | filter:$viewValue | limitTo:8" class="form-control input-sm no-bg no-border" placeholder="Search...">
+                    </div>
+                </div>
+            </form>
+            <!-- / search form -->
+        </div>
+        <!-- / navbar collapse -->
+
+    </header>
+    <!-- / header -->
+
+    <!-- aside -->
+    <!--<aside id="aside" class="app-aside hidden-xs {{app.settings.asideColor}}" ng-class="{'show animated fadeInLeft' : app.asideCollapse}" ng-include="'/Static/views/aside.html'">-->
+    <!--</aside>-->
+    <!-- / aside -->
+
+    <!-- content -->
+    <div id="p-container" class="app-content" role="main" ui-view ui-jp="loadAjaxForm">
+        <div class="container" style="opacity: 1; -webkit-transform: translate3d(0,0,0); -moz-transform: translate3d(0,0,0); -o-transform: translate3d(0,0,0); transform: translate3d(0,0,0);">
+            <pre>这里是首页</pre>
+        </div>
+    </div>
+    <!-- / content -->
+
+    <!-- footer -->
+    <footer id="footer" class="app-footer" role="footer" ng-include="'/Static/views/footer.html'">
+    </footer>
+    <!-- / footer -->
+</div>
+    <div id="api-lsBack">
+
+    </div>
+    <div id="api-lsLoading">
+        <div class="row-fluid">
+            <div class="span12">
+                <img src="/Static/images/loading.gif" alt=""/>
+            </div>
+        </div>
+    </div>
+<script>
+    var _appName = "<%=appName%>";
+    var _username = "<%=username%>";
+</script>
+<!-- jQuery -->
+<script src="/Static/bower_components/jquery/dist/jquery.min.js"></script>
+
+<!-- Angular -->
+<script src="/Static/bower_components/angular/angular.js"></script>
+<script src="/Static/bower_components/angular-animate/angular-animate.js"></script>
+<script src="/Static/bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="/Static/bower_components/angular-resource/angular-resource.js"></script>
+<script src="/Static/bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="/Static/bower_components/angular-touch/angular-touch.js"></script>
+<!-- Vendor -->
+<script src="/Static/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="/Static/bower_components/ngstorage/ngStorage.js"></script>
+<script src="/Static/bower_components/angular-ui-utils/ui-utils.js"></script>
+
+<!-- angular-strap -->
+<script src="/Static/bower_components/angular-strap/dist/angular-strap.js"></script>
+<script src="/Static/bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
+<!-- lazyload -->
+<script src="/Static/bower_components/oclazyload/dist/ocLazyLoad.js"></script>
+<!-- translate -->
+<script src="/Static/bower_components/angular-translate/angular-translate.js"></script>
+<script src="/Static/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+<script src="/Static/bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
+<script src="/Static/bower_components/angular-translate-storage-local/angular-translate-storage-local.js"></script>
+<!-- loading-bar -->
+<script src="/Static/bower_components/angular-loading-bar/build/loading-bar.js"></script>
+<!-- angular file uploader-->
+<script src="/Static/bower_components/angular-file-upload/angular-file-upload.min.js"></script>
+<!-- App -->
+<script src="/Static/scripts/app.js"></script>
+<script src="/Static/scripts/config.js"></script>
+<script src="/Static/scripts/config.router.js"></script>
+<script src="/Static/scripts/config.router.ui.js"></script>
+<script src="/Static/scripts/config.router.pages.js"></script>
+<script src="/Static/scripts/config.lazyload.js"></script>
+
+<script src="/Static/scripts/directives/lazyload.js"></script>
+<script src="/Static/scripts/directives/ui-jp.js"></script>
+<script src="/Static/scripts/directives/ui-nav.js"></script>
+<script src="/Static/scripts/directives/ui-fullscreen.js"></script>
+<script src="/Static/scripts/directives/ui-scroll.js"></script>
+
+<script src="/Static/scripts/services/ui-load.js"></script>
+
+<script src="/Static/scripts/main.js"></script>
+<script src="/Static/scripts/jquery-1.10.2.js"></script>
+<script src="/Static/scripts/jquery.pjax.js"></script>
+    <script>
+        // 禁止body滚动
+        var disableBodyScroll = function () {
+                    document.body.style.overflow = "hidden";
+                },
+        // 允许body滚动
+                enableBodyScroll = function () {
+                    document.body.style.overflow = "auto";
+                };
+
+        // 显示遮罩层
+        function showBack(callback, opacity) {
+            var _opacity = opacity || 0.5;
+            var _back = document.querySelector("#api-lsBack");
+            if(_back) {
+                _back.style.display = "block";
+                disableBodyScroll();
+                var _backTimeout = setTimeout(function () {
+                    _back.style.opacity = _opacity;
+                    if(callback) {
+                        var _callbackTimeout = setTimeout(function () {
+                            callback();
+                            clearTimeout(_callbackTimeout);
+                            clearTimeout(_backTimeout);
+                        }, 500);
+                    }
+                }, 10);
+            } else {}
+        }
+        // 隐藏遮罩层
+        function hideBack(callback) {
+            var _back = document.querySelector("#api-lsBack");
+            if(_back) {
+                _back.style.opacity = 0;
+                enableBodyScroll();
+                var _backTimeout = setTimeout(function () {
+                    _back.style.display = "none";
+                    if(callback) {
+                        var _callbackTimeout = setTimeout(function () {
+                            callback();
+                            clearTimeout(_callbackTimeout);
+                            clearTimeout(_backTimeout);
+                        }, 250);
+                    }
+                }, 300);
+            } else {}
+        }
+        // 显示加载动画
+        function showLoading(_showBack) {
+            var _loadingContainer = document.querySelector("#api-lsLoading");
+            if(_loadingContainer) {
+                if(_showBack) {
+                    showBack(function () {
+                        _loadingContainer.style.display = "block";
+                        var _loadingTimeout = setTimeout(function () {
+                            _loadingContainer.style.opacity = 1;
+                            clearTimeout(_loadingTimeout);
+                        }, 10);
+                    });
+                } else {
+                    _loadingContainer.style.display = "block";
+                    var _loadingTimeout = setTimeout(function () {
+                        _loadingContainer.style.opacity = 1;
+                        clearTimeout(_loadingTimeout);
+                    }, 10);
+                }
+            } else {}
+        }
+        // 隐藏加载动画
+        function hideLoading(_hideBack, callback) {
+            var _loadingContainer = document.querySelector("#api-lsLoading");
+            if(_loadingContainer) {
+                _loadingContainer.style.opacity = 0;
+                var _loadingTimeout = setTimeout(function () {
+                    _loadingContainer.style.display = "none";
+                    if(_hideBack) {
+                        hideBack(callback && callback);
+                    } else {
+                        callback && callback();
+                    }
+                    clearTimeout(_loadingTimeout);
+                }, 500);
+            } else {}
+        }
+    </script>
+</body>
+</html>

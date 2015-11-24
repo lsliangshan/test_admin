@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>websocket</title>
+</head>
+<body>
+<textarea name="" id="textField" cols="30" rows="10"></textarea>
+<button id="submitBtn" style="padding: 8px; background-color: transparent; border: none;">发送</button>
+</body>
+<script src="/Static/scripts/jquery-1.10.2.js"></script>
+<script>
+    $(function(){
+        var htmlMaps = {
+            '<': '<',
+            '>': '>',
+            '"': '"e;'
+        }
+        var escape_html = function (str) {
+            return (str + "").replace(/[<>'"]/g, function(a){
+                return htmlMaps[a];
+            })
+        }
+        function getWebSocket(){
+            var socket = new WebSocket("ws://" + location.hostname + ":3000/Admin/websocket/open");
+            var deferred = $.Deferred();
+            // 打开Socket
+            socket.onopen = function(event) {
+                $('<div class="alert alert-success">连接成功，开始聊天吧 ^_^</div>').appendTo(dataList);
+                deferred.resolve(socket);
+                // 监听消息
+                socket.onmessage = function(event) {
+                    var data = JSON.parse(event.data).result;
+                    console.log(data);
+                    var html = '<div class="data-item"><span class="label label-primary">'+data.name+'</span> '
+                    html += '<span>' + escape_html(data.text) + '</span></div>'
+                    $(html).appendTo(dataList);
+                    dataList[0] && (dataList[0].scrollTop = 100000000);
+                };
+                // 监听Socket的关闭
+                socket.onclose = function(event) {
+                    socket = null;
+                    console.log("websocket closed")
+                };
+            };
+            return deferred;
+        }
+        var ws = getWebSocket();
+        var dataList = $('.data-list');
+//        var input = document.;
+        $('#submitBtn').click(function(){
+
+            ws.then(function(ws){
+//                input.val('').focus();
+                ws.send(JSON.stringify({
+                    jsonrpc: "2.0",
+                    method: "/Admin/websocket/message",
+                    params: {text: document.querySelector("#textField").value.trim()},
+                    id: 1
+                }))
+            })
+        })
+    })
+</script>
+</html>

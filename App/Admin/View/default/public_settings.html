@@ -1,0 +1,184 @@
+<div class="container" ui-jp="loadStyleCss" style="opacity: 1; -webkit-transform: translate3d(0,0,0); -moz-transform: translate3d(0,0,0); -o-transform: translate3d(0,0,0); transform: translate3d(0,0,0);">
+    <div class="p-h-md p-v bg-white box-shadow pos-rlt">
+        <h3 class="no-margin">Settings</h3>
+    </div>
+    <div class="box">
+        <div class="col-md-3">
+            <div style="background:url(/Static/images/a1.jpg) center center; background-size:cover">
+                <div class="p-lg bg-white-opacity text-center">
+                    <a href class="w-xs inline">
+                        <img src="/Static/images/a1.jpg" class="img-circle img-responsive">
+                    </a>
+                    <div class="m-b m-t-sm h2">
+                        <span class="text-black"><%=sessionInfo.username%></span>
+                    </div>
+                    <p>
+                        <%=sessionInfo.description%>
+                    </p>
+                </div>
+            </div>
+            <ul class="nav nav-lists b-t" ui-nav>
+                <li class="active">
+                    <a href data-id="#profile-setting">个人资料</a>
+                </li>
+                <li>
+                    <a href data-id="#password-setting">修改密码</a>
+                </li>
+            </ul>
+        </div>
+        <div id="profile-container">
+            <div class="col-md-9 b-l bg-auto profile-pane active" id="profile-setting">
+                <div class="p-md bg-light b-b font-bold">基本资料</div>
+                <form role="form" id="profile-form" class="p-md" method="post">
+                    <div class="form-group">
+                        <label>头像</label>
+                        <div class="form-file">
+                            <input type="file" nv-file-select uploader="uploader">
+                            <button class="btn btn-default">上传头像</button>
+                        </div>
+                    </div>
+                    <div class="form-group row" ng-repeat="item in uploader.queue">
+                        <div class="col-xs-4">
+                            <div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
+                        </div>
+                        <div class="col-xs-2">
+                            <span ng-bind="item.file.size/1024/1024|number:2"></span> MB
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="progress" style="margin-bottom: 0;">
+                                <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                <span class="glyphicon glyphicon-upload"></span> Upload
+                            </button>
+                        </div>
+                    </div>
+                    <!--<div class="form-group">-->
+                        <!--<button class="btn btn-primary" ng-click="uploader.queue[0].upload()">上传</button>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<div class="progress" style="margin-bottom: 0; text-align: center;">-->
+                            <!--<div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>-->
+                            <!--<div style="height: 20px; position: absolute; color: white; text-align: center; width: 100%; margin-left: -20px;"><span ng-bind="uploader.queue[0].file.size/1024/1024|number:2"></span> MB</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="form-group">
+                        <label>昵称</label>
+                        <input type="text" value="<%=sessionInfo.nickname%>" name="nickname" class="form-control w-xxl w-full-xs">
+                    </div>
+                    <div class="form-group">
+                        <label>个性签名</label>
+                        <textarea name="description" class="form-control w-xxl w-full-xs"><%=sessionInfo.description%></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>邮箱</label>
+                        <input type="email" value="<%=sessionInfo.email%>" disabled class="form-control w-xxl w-full-xs">
+                    </div>
+                    <div class="form-group">
+                        <label>官网</label>
+                        <input type="text" value="<%=sessionInfo.website%>" name="website" class="form-control w-xxl w-full-xs">
+                    </div>
+                    <div class="form-group">
+                        <label>公司名称</label>
+                        <input type="text" value="<%=sessionInfo.company%>" name="company" class="form-control w-xxl w-full-xs">
+                    </div>
+                    <div class="form-group">
+                        <label>地址</label>
+                        <input type="text" value="<%=sessionInfo.address%>" name="address" class="form-control w-xxl w-full-xs">
+                    </div>
+                    <!--<div class="checkbox">-->
+                        <!--<label class="ui-checks">-->
+                            <!--<input type="checkbox"><i></i> Available for hire-->
+                        <!--</label>-->
+                    <!--</div>-->
+                    <button type="button" id="modify_profile" class="btn btn-info m-t">保存</button>
+                </form>
+            </div>
+            <div class="col-md-9 b-l bg-auto profile-pane" id="password-setting">
+                <div class="p-md bg-light b-b font-bold">修改密码</div>
+                <form role="form" class="p-md">
+                    <div class="form-group">
+                        <label>旧密码</label>
+                        <input type="password" name="old_password" class="form-control w-xxl w-full-xs">
+                    </div>
+                    <div class="form-group">
+                        <label>新密码</label>
+                        <input type="password" name="new_password" class="form-control w-xxl w-full-xs">
+                    </div>
+                    <div class="form-group">
+                        <label>确认密码</label>
+                        <input type="password" name="re_password" class="form-control w-xxl w-full-xs">
+                    </div>
+                    <button id="modify_password" type="submit" class="btn btn-info m-t">保存</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <form name="form" action=""></form>
+    <script>
+
+        function ajaxFormSubmit(formId, url, data, callback) {
+            if(url && (typeof url == "string")) {
+                $("#" + formId).ajaxSubmit({
+                    //按钮上是否自定义提交地址(多按钮情况)
+                    url: url,
+                    dataType: 'json',
+                    method: "post",
+                    data: data || {},
+                    beforeSubmit: function () {
+                    },
+                    success: function (result) {
+                        callback && callback(result);
+                    }
+                });
+            } else {}
+        }
+
+        // 修改个人资料
+        var _modifyProfile = document.querySelector("#modify_profile"),
+                _nickname = document.querySelector("input[name='nickname']"),
+                _description = document.querySelector("input[name='description']"),
+                _website = document.querySelector("inupt[name='website']"),
+                _company = document.querySelector("input[name='company']"),
+                _address = document.querySelector("input[name='address']");
+        _modifyProfile.addEventListener("click", function () {
+            ajaxFormSubmit("profile-form", "/Public/modifyProfile", {}, function (res) {
+                alert(res.errmsg);
+                if(res.data.referer) {
+                    location.href = res.data.referer;
+                }
+            });
+        }, false);
+
+
+        // 修改密码
+        var _modifyPassword = document.querySelector("#modify_password"),
+                _oldPassword = document.querySelector("input[name='old_password']"),
+                _newPassword = document.querySelector("input[name='new_password']"),
+                _rePassword = document.querySelector("input[name='re_password']");
+        _modifyPassword.addEventListener("click", function () {
+            if(_oldPassword && _oldPassword.value.trim() == "") {
+                alert("请输入原始密码");
+            } else if(_newPassword && _newPassword.value.trim() == "") {
+                alert("请输入新密码");
+            } else if (_rePassword && _rePassword.value.trim() == "") {
+                alert("请确认新密码");
+            } else if (_newPassword && _rePassword && _newPassword.value.trim() != _rePassword.value.trim()) {
+                alert("确认新密码有误");
+            } else {
+                $.post("/Public/modifyPassword", {
+                    "old_password": _oldPassword && _oldPassword.value.trim(),
+                    "new_password": _newPassword && _newPassword.value.trim(),
+                    "__TOKEN__": _token && _token.value.trim()
+                }, function (res) {
+                    alert(res.errmsg);
+                    if(res.data.referer) {
+                        location.href = res.data.referer;
+                    }
+                });
+            }
+        }, false);
+    </script>
+</div>
