@@ -174,7 +174,7 @@ module.exports = Controller("AppFrameController", function () {
                         }
                         return self.UserModel.where({"email": suser.email, "id": suser.id}).update(formData).then(function (id) {
                             if(!isEmpty(id)) {
-                                return self.UserModel.where({"email": suser.email, "id": suser.id}).find().then(function (user) {
+                                return self.UserModel.where({"id": id}).find().then(function (user) {
                                     if(!isEmpty(user)) {
                                         self.session("userInfo", user);
                                     }

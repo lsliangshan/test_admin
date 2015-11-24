@@ -8,9 +8,38 @@
  * Controller of the app
  */
 angular.module('app')
-    .controller('MainCtrl', ['$scope', '$translate', '$localStorage', '$window', '$compile', 'FileUploader',
-        function ($scope, $translate, $localStorage, $window, $compile, FileUploader) {
+    .controller('MainCtrl', ['$scope', '$translate', '$localStorage', '$window', '$compile', 'FileUploader', "$alert",
+        function ($scope, $translate, $localStorage, $window, $compile, FileUploader, $alert) {
+            $scope.lsAlert = function (content, title, duration, type) {
+                $alert({
+                    title: title || "提示",
+                    content: content || "提示信息",
+                    type: type || "info",
+                    duration: duration || 3,
+                    animation: 'am-fade-and-slide-top',
+                    placement: 'top-right',
+                    show: true
+                });
+            };
 
+            $scope.ajaxFormSubmit = function(formId, url, data, callback) {
+                if(url && (typeof url == "string")) {
+                    $("#" + formId).ajaxSubmit({
+                        //按钮上是否自定义提交地址(多按钮情况)
+                        url: url,
+                        dataType: 'json',
+                        method: "post",
+                        data: data || {},
+                        beforeSubmit: function () {
+                        },
+                        success: function (result) {
+                            callback && callback(result);
+                        }
+                    });
+                } else {}
+            };
+
+            //var myAlert = $alert({title: 'Holy guacamole!', content: 'Best check yo self, you\'re not looking too good.', placement: 'top', type: 'info'});
             var uploader = $scope.uploader = new FileUploader({
                 url: "/Index/upload",
                 //autoUpload: true,
@@ -161,5 +190,46 @@ angular.module('app')
                     _target.style.transform = "translate3d(0, 0, 0)";
                 }, 20);
             });
+
+            // 个人中心资料修改
+            // 修改个人资料
+            $scope.modifyProfile = function () {
+                $scope.ajaxFormSubmit("profile-form", "/Public/modifyProfile", {}, function (res) {
+                    $scope.lsAlert(res.errmsg);
+                    if(res.data.referer) {
+                        location.href = res.data.referer;
+                    }
+                });
+            };
+
+            // 修改密码
+            //$scope.modifyPassword = function () {
+            //
+            //}
+            //var _modifyPassword = document.querySelector("#modify_password"),
+            //    _oldPassword = document.querySelector("input[name='old_password']"),
+            //    _newPassword = document.querySelector("input[name='new_password']"),
+            //    _rePassword = document.querySelector("input[name='re_password']");
+            //_modifyPassword.addEventListener("click", function () {
+            //    if(_oldPassword && _oldPassword.value.trim() == "") {
+            //        alert("请输入原始密码");
+            //    } else if(_newPassword && _newPassword.value.trim() == "") {
+            //        alert("请输入新密码");
+            //    } else if (_rePassword && _rePassword.value.trim() == "") {
+            //        alert("请确认新密码");
+            //    } else if (_newPassword && _rePassword && _newPassword.value.trim() != _rePassword.value.trim()) {
+            //        alert("确认新密码有误");
+            //    } else {
+            //        $.post("/Public/modifyPassword", {
+            //            "old_password": _oldPassword && _oldPassword.value.trim(),
+            //            "new_password": _newPassword && _newPassword.value.trim()
+            //        }, function (res) {
+            //            alert(res.errmsg);
+            //            if(res.data.referer) {
+            //                location.href = res.data.referer;
+            //            }
+            //        });
+            //    }
+            //}, false);
         }
     ]);

@@ -37,24 +37,24 @@
                             <button class="btn btn-default">上传头像</button>
                         </div>
                     </div>
-                    <div class="form-group row" ng-repeat="item in uploader.queue">
-                        <div class="col-xs-4">
-                            <div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
-                        </div>
-                        <div class="col-xs-2">
-                            <span ng-bind="item.file.size/1024/1024|number:2"></span> MB
-                        </div>
-                        <div class="col-xs-3">
-                            <div class="progress" style="margin-bottom: 0;">
-                                <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
-                            </div>
-                        </div>
-                        <div class="col-xs-3">
-                            <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
-                                <span class="glyphicon glyphicon-upload"></span> Upload
-                            </button>
-                        </div>
-                    </div>
+                    <!--<div class="form-group row" ng-repeat="item in uploader.queue">-->
+                        <!--<div class="col-xs-4">-->
+                            <!--<div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>-->
+                        <!--</div>-->
+                        <!--<div class="col-xs-2">-->
+                            <!--<span ng-bind="item.file.size/1024/1024|number:2"></span> MB-->
+                        <!--</div>-->
+                        <!--<div class="col-xs-3">-->
+                            <!--<div class="progress" style="margin-bottom: 0;">-->
+                                <!--<div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="col-xs-3">-->
+                            <!--<button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">-->
+                                <!--<span class="glyphicon glyphicon-upload"></span> Upload-->
+                            <!--</button>-->
+                        <!--</div>-->
+                    <!--</div>-->
                     <!--<div class="form-group">-->
                         <!--<button class="btn btn-primary" ng-click="uploader.queue[0].upload()">上传</button>-->
                     <!--</div>-->
@@ -67,6 +67,10 @@
                     <div class="form-group">
                         <label>昵称</label>
                         <input type="text" value="<%=sessionInfo.nickname%>" name="nickname" class="form-control w-xxl w-full-xs">
+                    </div>
+                    <div class="form-group">
+                        <label>生日</label>
+                        <input type="text" placeholder="yyyy-MM-dd" ng-model="ss" bs-datepicker>
                     </div>
                     <div class="form-group">
                         <label>个性签名</label>
@@ -93,7 +97,7 @@
                             <!--<input type="checkbox"><i></i> Available for hire-->
                         <!--</label>-->
                     <!--</div>-->
-                    <button type="button" id="modify_profile" class="btn btn-info m-t">保存</button>
+                    <button type="button" id="modify_profile" ng-click="modifyProfile()" class="btn btn-info m-t">保存</button>
                 </form>
             </div>
             <div class="col-md-9 b-l bg-auto profile-pane" id="password-setting">
@@ -119,66 +123,6 @@
     <form name="form" action=""></form>
     <script>
 
-        function ajaxFormSubmit(formId, url, data, callback) {
-            if(url && (typeof url == "string")) {
-                $("#" + formId).ajaxSubmit({
-                    //按钮上是否自定义提交地址(多按钮情况)
-                    url: url,
-                    dataType: 'json',
-                    method: "post",
-                    data: data || {},
-                    beforeSubmit: function () {
-                    },
-                    success: function (result) {
-                        callback && callback(result);
-                    }
-                });
-            } else {}
-        }
 
-        // 修改个人资料
-        var _modifyProfile = document.querySelector("#modify_profile"),
-                _nickname = document.querySelector("input[name='nickname']"),
-                _description = document.querySelector("input[name='description']"),
-                _website = document.querySelector("inupt[name='website']"),
-                _company = document.querySelector("input[name='company']"),
-                _address = document.querySelector("input[name='address']");
-        _modifyProfile.addEventListener("click", function () {
-            ajaxFormSubmit("profile-form", "/Public/modifyProfile", {}, function (res) {
-                alert(res.errmsg);
-                if(res.data.referer) {
-                    location.href = res.data.referer;
-                }
-            });
-        }, false);
-
-
-        // 修改密码
-        var _modifyPassword = document.querySelector("#modify_password"),
-                _oldPassword = document.querySelector("input[name='old_password']"),
-                _newPassword = document.querySelector("input[name='new_password']"),
-                _rePassword = document.querySelector("input[name='re_password']");
-        _modifyPassword.addEventListener("click", function () {
-            if(_oldPassword && _oldPassword.value.trim() == "") {
-                alert("请输入原始密码");
-            } else if(_newPassword && _newPassword.value.trim() == "") {
-                alert("请输入新密码");
-            } else if (_rePassword && _rePassword.value.trim() == "") {
-                alert("请确认新密码");
-            } else if (_newPassword && _rePassword && _newPassword.value.trim() != _rePassword.value.trim()) {
-                alert("确认新密码有误");
-            } else {
-                $.post("/Public/modifyPassword", {
-                    "old_password": _oldPassword && _oldPassword.value.trim(),
-                    "new_password": _newPassword && _newPassword.value.trim(),
-                    "__TOKEN__": _token && _token.value.trim()
-                }, function (res) {
-                    alert(res.errmsg);
-                    if(res.data.referer) {
-                        location.href = res.data.referer;
-                    }
-                });
-            }
-        }, false);
     </script>
 </div>
