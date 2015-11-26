@@ -1582,7 +1582,7 @@ a.list-group-item.hover {
 }
 
 .aside-backdrop.am-fade {
-  background: rgba(0, 0, 0, 0);
+  /*background: rgba(0, 0, 0, 0);*/
 }
 
 .aside-open-backdrop .aside-backdrop.am-fade {

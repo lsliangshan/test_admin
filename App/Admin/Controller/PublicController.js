@@ -264,6 +264,9 @@ module.exports = Controller("AppFrameController", function () {
         homeAction: function () {
             return this.display();
         },
+        componentAction: function () {
+            return this.display();
+        },
         errorAction: function () {
             var errmsg = new Buffer(I('errmsg', this), "base64").toString("utf8");
             this.assign("appName", "Admin");

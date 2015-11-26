@@ -87,6 +87,15 @@ module.exports = Controller(function () {
         },
         uploadAction: function () {
             return this.echo("ssssss");
+        },
+        testGetDropdownHtmlAction: function () {
+            this.assign("data", [{"text": "选项1"}, {"text": "选项2"}, {"text": "选项3"}, {"text": "选项4"}, {"text": "选项5"}])
+            return this.display();
+        },
+        testGetAsideHtmlAction: function () {
+            var _type = I("type", this);
+            this.assign("type", _type);
+            return this.display();
         }
     }
 });

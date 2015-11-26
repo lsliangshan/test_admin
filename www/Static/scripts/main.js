@@ -10,17 +10,44 @@
 angular.module('app')
     .controller('MainCtrl', ['$scope', '$translate', '$localStorage', '$window', '$compile', 'FileUploader', "$alert",
         function ($scope, $translate, $localStorage, $window, $compile, FileUploader, $alert) {
-            $scope.lsAlert = function (content, title, duration, type) {
-                $alert({
-                    title: title || "提示",
-                    content: content || "提示信息",
-                    type: type || "info",
-                    duration: duration || 3,
-                    animation: 'am-fade-and-slide-top',
-                    placement: 'top-right',
-                    show: true
-                });
-            };
+            //$scope.lsAlert = function (content, title, duration, type) {
+            //    $alert({
+            //        title: title || "提示",
+            //        content: content || "提示信息",
+            //        type: type || "info",
+            //        duration: duration || 3,
+            //        animation: 'am-fade-and-slide-top',
+            //        placement: 'top-right',
+            //        show: true
+            //    });
+            //};
+            
+            $scope.lsAlert = function (content, title, duration) {
+                
+            }
+
+            $scope.dropdown = [
+                {
+                    "text": "<i class=\"fa fa-fw fa-download\"></i>&nbsp;Another action",
+                    "href": "#anotherAction"
+                },
+                {
+                    "text": "<i class=\"fa fa-fw fa-globe\"></i>&nbsp;Display an alert",
+                    "click": "$alert(\"Holy guacamole!\")"
+                },
+                {
+                    "text": "<i class=\"fa fa-fw fa-external-link\"></i>&nbsp;External link",
+                    "href": "/auth/facebook",
+                    "target": "_self"
+                },
+                {
+                    "divider": true
+                },
+                {
+                    "text": "Separated link",
+                    "href": "#separatedLink"
+                }
+            ];
 
             $scope.ajaxFormSubmit = function(formId, url, data, callback) {
                 if(url && (typeof url == "string")) {

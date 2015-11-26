@@ -82,7 +82,7 @@
 <body ng-app="app">
 
     <!--<header id="header" class="app-header navbar bg-primary lt" role="menu" ng-include="'/Static/header.html'" style="position: fixed; width: 100%; left: 0; top: 0;"></header>-->
-<div ui-view class="app" ng-controller="MainCtrl">
+<div ui-view class="app app-header-fixed app-aside-top" ng-controller="MainCtrl">
     <!-- header -->
     <header id="header" class="app-header navbar {{app.settings.headerColor}}" role="menu">
         <!-- navbar header -->
@@ -95,7 +95,7 @@
             </button>
             <!-- brand -->
             <a class="navbar-brand text-lt"
-               bs-aside="aside"
+               j-aside
                data-template="/Static/views/partials/aside.tpl.html"
                data-placement="top"
                data-animation="am-slide-top aside-open-backdrop"
@@ -120,12 +120,12 @@
                         <span>首页</span>
                     </a>
                 </li>
-                <!--<li>-->
-                    <!--<a ui-sref="mail.inbox">-->
-                        <!--<i class="fa fa-fw fa-envelope"></i>-->
-                        <!--<span translate="header.navbar.EMAIL">Email</span>-->
-                    <!--</a>-->
-                <!--</li>-->
+                <li>
+                    <a data-pjax href="/Public/component">
+                        <i class="fa fa-fw fa-suitcase"></i>
+                        <span>控件</span>
+                    </a>
+                </li>
                 <!--<li>-->
                     <!--<a ui-sref="ui.component.arrow">-->
                         <!--<i class="fa fa-fw fa-suitcase"></i>-->
@@ -173,7 +173,7 @@
                             </div>
                         </div>
                     </script>
-                    <a href bs-dropdown="dropdown" data-animation="am-collapse" data-template="settings">
+                    <a href j-dropdown="dropdown" data-animation="am-collapse" data-template="settings">
                         <i class="glyphicon glyphicon-cog"></i>
                         <span class="visible-xs-inline">Settings</span>
                     </a>
@@ -192,10 +192,10 @@
                     </a>
                 </li>
                 <li class="hidden-xs hidden-sm">
-                    <a href ui-fullscreen title="全屏显示"><i class="glyphicon glyphicon-resize-vertical"></i></a>
+                    <a href ui-fullscreen j-tooltip data-type="info" data-placement="bottom" data-title="全屏显示"><i class="glyphicon glyphicon-resize-vertical"></i></a>
                 </li>
                 <li>
-                    <a href class="clear no-padding-h" bs-dropdown="dropdown" data-animation="am-collapse" data-template="user">
+                    <a href class="clear no-padding-h" j-dropdown="dropdown" data-animation="am-collapse" data-template="user">
                         <img src="/Static/images/a0.jpg" alt="..." class="navbar-img pull-right">
                         <span class="hidden-sm m-l"><%=sessionInfo.username%></span>
                         <b class="caret m-h-xs hidden-sm"></b>
