@@ -326,7 +326,10 @@ module
              * @private
              */
             FileUploader.prototype._getTotalProgress = function(value) {
-                if(this.removeAfterUpload) return value || 0;
+                var self = this;
+                setTimeout(function () {
+                    if(self.removeAfterUpload) return value || 0;
+                }, 2000);
 
                 var notUploaded = this.getNotUploadedItems().length;
                 var uploaded = notUploaded ? this.queue.length - notUploaded : this.queue.length;
@@ -953,7 +956,10 @@ module
              */
             FileItem.prototype._onComplete = function(response, status, headers) {
                 this.onComplete(response, status, headers);
-                if (this.removeAfterUpload) this.remove();
+                var self = this;
+                setTimeout(function () {
+                    if (self.removeAfterUpload) self.remove();
+                }, 2000);
             };
             /**
              * Destroys a FileItem

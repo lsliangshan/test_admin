@@ -86,7 +86,15 @@ module.exports = Controller(function () {
             });
         },
         uploadAction: function () {
-            return this.echo("ssssss");
+            var self = this;
+            var bImg = this.file('file');
+            return X("Attachment/Attachment").upload(bImg,1).then(function (data) {
+                if(!isEmpty(data)) {
+                    return self.success("上传成功", data);
+                } else {
+                    return self.error("上传失败");
+                }
+            });
         },
         testGetDropdownHtmlAction: function () {
             this.assign("data", [{"text": "选项1"}, {"text": "选项2"}, {"text": "选项3"}, {"text": "选项4"}, {"text": "选项5"}])
@@ -96,6 +104,14 @@ module.exports = Controller(function () {
             var _type = I("type", this);
             this.assign("type", _type);
             return this.display();
+        },
+        testGetDataAction: function () {
+            var _q = I("q", this);
+            var res = [];
+            for(var i = 0; i < 200; i++) {
+                res.push({"id":(i+1),"full_name":"full name " + i + ": " + _q,"text":"text: " + _q})
+            }
+            return this.json(res);
         }
     }
 });

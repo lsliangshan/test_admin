@@ -5,17 +5,24 @@
     <div class="box">
         <div class="col-md-3">
             <div style="background:url(/Static/images/a1.jpg) center center; background-size:cover">
-                <div class="p-lg bg-white-opacity text-center">
-                    <a href class="w-xs inline">
-                        <img src="/Static/images/a1.jpg" class="img-circle img-responsive">
-                    </a>
-                    <div class="m-b m-t-sm h2">
-                        <span class="text-black"><%=sessionInfo.username%></span>
+                <form action="" role="form">
+                    <div class="p-lg bg-white-opacity text-center">
+                        <div href class="w-xs inline form-file" style="border-radius: 50%; overflow: hidden; height: 90px; width: 90px;">
+                            <input type="file" nv-file-select uploader="uploader">
+                            <img src="/Static/images/a1.jpg" ng-src="{{ uploaderInfo.fileurl }}" style="height: 100%;" class="img-responsive">
+                            <!--<i class="ui-icon glyphicon glyphicon-camera" style="top: -45px; color: #E1B020;"></i>-->
+                        </div>
+                        <div class="progress" style="margin-bottom: 0; height: 4px; width: 50%; margin-left: auto; margin-right: auto;">
+                            <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.queue[0].progress + '%' }"></div>
+                        </div>
+                        <div class="m-b m-t-sm h2">
+                            <span class="text-black"><%=sessionInfo.username%></span>
+                        </div>
+                        <p>
+                            <%=sessionInfo.description%>
+                        </p>
                     </div>
-                    <p>
-                        <%=sessionInfo.description%>
-                    </p>
-                </div>
+                </form>
             </div>
             <ul class="nav nav-lists b-t" ui-nav>
                 <li class="active">
@@ -30,13 +37,13 @@
             <div class="col-md-9 b-l bg-auto profile-pane active" id="profile-setting">
                 <div class="p-md bg-light b-b font-bold">基本资料</div>
                 <form role="form" id="profile-form" class="p-md" method="post">
-                    <div class="form-group">
-                        <label>头像</label>
-                        <div class="form-file">
-                            <input type="file" nv-file-select uploader="uploader">
-                            <button class="btn btn-default">上传头像</button>
-                        </div>
-                    </div>
+                    <!--<div class="form-group">-->
+                        <!--<label>头像</label>-->
+                        <!--<div class="form-file">-->
+                            <!--<input type="file" nv-file-select uploader="uploader">-->
+                            <!--<button class="btn btn-default">上传头像</button>-->
+                        <!--</div>-->
+                    <!--</div>-->
                     <!--<div class="form-group row" ng-repeat="item in uploader.queue">-->
                         <!--<div class="col-xs-4">-->
                             <!--<div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>-->

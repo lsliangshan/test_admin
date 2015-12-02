@@ -38,7 +38,7 @@ angular.module('app')
           name: 'angularFileUpload',
           module: true,
           files: [
-              '/Static/bower_components/angular-file-upload/angular-file-upload.min.js'
+              '/Static/bower_components/angular-file-upload/angular-file-upload.js'
           ]
       },
       {
@@ -111,6 +111,38 @@ angular.module('app')
           module: false,
           files: [
               "/Static/scripts/jquery.ajaxform.js"
+          ]
+      },
+      {
+          name: "jDatetime",
+          module: false,
+          files: [
+              //"/Static/bower_components/angular/angular.js",
+              //"/Static/bower_components/bootstrap/dist/js/bootstrap.min.js",
+              "/Static/bower_components/date-time/bootstrap-datetimepicker.min.css",
+              "/Static/bower_components/date-time/bootstrap-datetimepicker.min.js",
+              "/Static/bower_components/date-time/locales/bootstrap-datetimepicker.zh-CN.js"
+          ]
+      },
+      {
+          name: "jColorpicker",
+          module: false,
+          files: [
+              //"/Static/bower_components/angular/angular.js",
+              "/Static/bower_components/bootstrap/dist/js/bootstrap.min.js",
+              "/Static/bower_components/bootstrap-colorpicker/bootstrap.colorpickersliders.min.css",
+              "/Static/bower_components/bootstrap-colorpicker/tinycolor.min.js",
+              "/Static/bower_components/bootstrap-colorpicker/bootstrap.colorpickersliders.min.js"
+          ]
+      },
+      {
+          name: "jSelect2",
+          module: false,
+          files: [
+              "/Static/bower_components/select2/dist/css/select2.min.css",
+              "/Static/bower_components/select2/dist/js/select2.full.js"
+              //,
+              //"/Static/bower_components/select2/dist/js/i18n/zh-CN.js"
           ]
       }
     ]

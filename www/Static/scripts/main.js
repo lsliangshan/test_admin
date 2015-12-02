@@ -8,8 +8,8 @@
  * Controller of the app
  */
 angular.module('app')
-    .controller('MainCtrl', ['$scope', '$translate', '$localStorage', '$window', '$compile', 'FileUploader', "$alert",
-        function ($scope, $translate, $localStorage, $window, $compile, FileUploader, $alert) {
+    .controller('MainCtrl', ['$scope', '$translate', '$localStorage', '$window', '$compile', 'FileUploader', "$alert", "cfpLoadingBar",
+        function ($scope, $translate, $localStorage, $window, $compile, FileUploader, $alert, cfpLoadingBar) {
             //$scope.lsAlert = function (content, title, duration, type) {
             //    $alert({
             //        title: title || "提示",
@@ -21,6 +21,7 @@ angular.module('app')
             //        show: true
             //    });
             //};
+            cfpLoadingBar.start();
             
             $scope.lsAlert = function (content, title, duration) {
                 
@@ -67,10 +68,11 @@ angular.module('app')
             };
 
             //var myAlert = $alert({title: 'Holy guacamole!', content: 'Best check yo self, you\'re not looking too good.', placement: 'top', type: 'info'});
+            $scope.uploaderInfo = {};
             var uploader = $scope.uploader = new FileUploader({
                 url: "/Index/upload",
-                //autoUpload: true,
-                //removeAfterUpload: true,
+                autoUpload: true,
+                removeAfterUpload: true,
                 queueLimit: 1,
                 filter: "imageFilter"
             });
@@ -83,9 +85,9 @@ angular.module('app')
                 }
             });
 
-            //uploader.onAfterAddingFile = function(fileItem) {
-            //    console.info('onAfterAddingFile', fileItem);
-            //};
+            uploader.onAfterAddingFile = function(fileItem) {
+                $scope.uploader.queue[0].progress = 0;
+            };
             //uploader.onBeforeUploadItem = function(item) {
             //    console.info('onBeforeUploadItem', item);
             //};
@@ -95,9 +97,17 @@ angular.module('app')
             //uploader.onErrorItem = function(fileItem, response, status, headers) {
             //    console.info('onErrorItem', fileItem, response, status, headers);
             //};
+            uploader.onSuccessItem = function(item, response, status, headers) {
+
+            };
             uploader.onCompleteItem = function(fileItem, response, status, headers) {
-                //console.info('onCompleteItem', fileItem, response, status, headers);
-                $scope.uploader.progress = 0;
+                setTimeout(function () {
+                    uploader.queue = [];
+                    //uploader.removeFromQueue(0);
+                    $(".progress").eq(0).html($compile($(".progress").eq(0).html())($scope));
+                    console.log($(".progress").eq(0).html())
+                }, 3000);
+                $scope.uploaderInfo = response.data;
             };
 
             // add 'ie' classes to html

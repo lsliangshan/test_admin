@@ -1173,7 +1173,7 @@
 
     })
 
-    .directive('jDate', ["$window", "$parse", "$q", "$dateFormatter", "$dateParser", "$datepicker", function ($window, $parse, $q, $dateFormatter, $dateParser, $datepicker) {
+    .directive('bsDate', ["$window", "$parse", "$q", "$dateFormatter", "$dateParser", "$datepicker", function ($window, $parse, $q, $dateFormatter, $dateParser, $datepicker) {
 
       var defaults = $datepicker.defaults;
       var isNative = /(ip(a|o)d|iphone|android)/ig.test($window.navigator.userAgent);
@@ -4035,7 +4035,7 @@
     })
 
 
-    .directive('jTime', ["$window", "$parse", "$q", "$dateFormatter", "$dateParser", "$timepicker", function ($window, $parse, $q, $dateFormatter, $dateParser, $timepicker) {
+    .directive('bsTime', ["$window", "$parse", "$q", "$dateFormatter", "$dateParser", "$timepicker", function ($window, $parse, $q, $dateFormatter, $dateParser, $timepicker) {
 
       var defaults = $timepicker.defaults;
       var isNative = /(ip(a|o)d|iphone|android)/ig.test($window.navigator.userAgent);
@@ -5034,7 +5034,7 @@
 
     })
 
-    .directive('bsTypeahead', ["$window", "$parse", "$q", "$typeahead", "$parseOptions", function ($window, $parse, $q, $typeahead, $parseOptions) {
+    .directive('bsTypeahead', ["$window", "$parse", "$q", "$typeahead", "$parseOptions",  function ($window, $parse, $q, $typeahead, $parseOptions) {
 
       var defaults = $typeahead.defaults;
 
@@ -5126,6 +5126,533 @@
         }
       };
 
-    }]);
+    }])
+
+    .directive("jDatetime", ["$compile", "$ocLazyLoad", function ($compile, $ocLazyLoad) {
+      return {
+        restrict: "AC",
+        scope: "$scope",
+        link: function (scope, elem, attrs) {
+          elem.attr("ui-jp", "jDatetime");
+          elem.parent().html($compile(elem.parent().html())(scope));
+
+          var _renderInterval = setInterval(function () {
+            if($ocLazyLoad.isLoaded('jDatetime')) {
+              $(elem).datetimepicker({
+                language:  'zh-CN',
+                todayBtn:  1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                forceParse: 0,
+                showMeridian: 1,
+                bootcssVer: 3
+              });
+              clearInterval(_renderInterval);
+            }
+          }, 50);
+
+          //setTimeout(function () {
+          //  if($(elem).datetimepicker) {
+          //    $(elem).datetimepicker({
+          //      language:  'zh-CN',
+          //      todayBtn:  1,
+          //      autoclose: 1,
+          //      todayHighlight: 1,
+          //      startView: 2,
+          //      forceParse: 0,
+          //      showMeridian: 1,
+          //      bootcssVer: 3
+          //    });
+          //  } else {
+          //    setTimeout(function () {
+          //      $(elem).datetimepicker({
+          //        language:  'zh-CN',
+          //        todayBtn:  1,
+          //        autoclose: 1,
+          //        todayHighlight: 1,
+          //        startView: 2,
+          //        forceParse: 0,
+          //        showMeridian: 1,
+          //        bootcssVer: 3
+          //      });
+          //    }, 1000);
+          //  }
+          //  elem.on("focus", function () {
+          //    $(elem).datetimepicker({
+          //      language:  'zh-CN',
+          //      todayBtn:  1,
+          //      autoclose: 1,
+          //      todayHighlight: 1,
+          //      startView: 2,
+          //      forceParse: 0,
+          //      showMeridian: 1,
+          //      bootcssVer: 3
+          //    });
+          //  });
+          //}, 500);
+        }
+      }
+    }])
+    .directive("jDate", ["$compile", "$ocLazyLoad", function ($compile, $ocLazyLoad) {
+      return {
+        restrict: "AC",
+        scope: "$scope",
+        link: function (scope, elem, attrs) {
+          elem.attr("ui-jp", "jDatetime");
+          elem.parent().html($compile(elem.parent().html())(scope));
+
+          var _renderInterval = setInterval(function () {
+            if($ocLazyLoad.isLoaded('jDatetime')) {
+              $(elem).datetimepicker({
+                language:  'zh-CN',
+                //format: "yyyy-mm-dd",
+                weekStart: 1,
+                todayBtn:  1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                minView: 2,
+                forceParse: 0,
+                bootcssVer: 3
+              });
+              clearInterval(_renderInterval);
+            }
+          }, 50);
+
+          //setTimeout(function () {
+          //  if($(elem).datetimepicker) {
+          //    $(elem).datetimepicker({
+          //      language:  'zh-CN',
+          //      //format: "yyyy-mm-dd",
+          //      weekStart: 1,
+          //      todayBtn:  1,
+          //      autoclose: 1,
+          //      todayHighlight: 1,
+          //      startView: 2,
+          //      minView: 2,
+          //      forceParse: 0,
+          //      bootcssVer: 3
+          //    });
+          //  } else {
+          //    setTimeout(function () {
+          //      $(elem).datetimepicker({
+          //        language:  'zh-CN',
+          //        //format: "yyyy-mm-dd",
+          //        weekStart: 1,
+          //        todayBtn:  1,
+          //        autoclose: 1,
+          //        todayHighlight: 1,
+          //        startView: 2,
+          //        minView: 2,
+          //        forceParse: 0,
+          //        bootcssVer: 3
+          //      });
+          //    }, 1000);
+          //  }
+          //  elem.on("focus", function () {
+          //    $(elem).datetimepicker({
+          //      language:  'zh-CN',
+          //      //format: "yyyy-mm-dd",
+          //      weekStart: 1,
+          //      todayBtn:  1,
+          //      autoclose: 1,
+          //      todayHighlight: 1,
+          //      startView: 2,
+          //      minView: 2,
+          //      forceParse: 0,
+          //      bootcssVer: 3
+          //    });
+          //  });
+          //}, 500);
+        }
+      }
+    }])
+    .directive("jTime", ["$compile", "$ocLazyLoad", function ($compile, $ocLazyLoad) {
+      return {
+        restrict: "AC",
+        scope: "$scope",
+        link: function (scope, elem, attrs) {
+          elem.attr("ui-jp", "jDatetime");
+          elem.parent().html($compile(elem.parent().html())(scope));
+
+          var _renderInterval = setInterval(function () {
+            if($ocLazyLoad.isLoaded('jDatetime')) {
+              $(elem).datetimepicker({
+                language:  'zh-CN',
+                //format: "hh:ii:ss",
+                weekStart: 1,
+                todayBtn:  1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 1,
+                minView: 0,
+                maxView: 1,
+                forceParse: 0,
+                bootcssVer: 3
+              });
+              clearInterval(_renderInterval);
+            }
+          }, 50);
+
+          //setTimeout(function () {
+          //  if($(elem).datetimepicker) {
+          //    $(elem).datetimepicker({
+          //      language:  'zh-CN',
+          //      //format: "hh:ii:ss",
+          //      weekStart: 1,
+          //      todayBtn:  1,
+          //      autoclose: 1,
+          //      todayHighlight: 1,
+          //      startView: 1,
+          //      minView: 0,
+          //      maxView: 1,
+          //      forceParse: 0,
+          //      bootcssVer: 3
+          //    });
+          //  } else {
+          //    setTimeout(function () {
+          //      $(elem).datetimepicker({
+          //        language:  'zh-CN',
+          //        //format: "hh:ii:ss",
+          //        weekStart: 1,
+          //        todayBtn:  1,
+          //        autoclose: 1,
+          //        todayHighlight: 1,
+          //        startView: 1,
+          //        minView: 0,
+          //        maxView: 1,
+          //        forceParse: 0,
+          //        bootcssVer: 3
+          //      });
+          //    }, 1000);
+          //  }
+          //  elem.on("focus", function () {
+          //    $(elem).datetimepicker({
+          //      language:  'zh-CN',
+          //      //format: "hh:ii:ss",
+          //      weekStart: 1,
+          //      todayBtn:  1,
+          //      autoclose: 1,
+          //      todayHighlight: 1,
+          //      startView: 1,
+          //      minView: 0,
+          //      maxView: 1,
+          //      forceParse: 0,
+          //      bootcssVer: 3
+          //    });
+          //  });
+          //}, 500);
+        }
+      }
+    }])
+    .directive("jColorpicker", ["$compile", "$ocLazyLoad", function ($compile, $ocLazyLoad) {
+      return {
+        restrict: "AC",
+        scope: "$scope",
+        link: function (scope, elem, attrs) {
+          $(elem).addClass("lsFade");
+          $(elem).css({"opacity":0});
+          elem.attr("ui-jp", "jColorpicker");
+          elem.parent().html($compile(elem.parent().html())(scope));
+          var colorpickersliders;
+
+          var _renderInterval = setInterval(function () {
+            if($ocLazyLoad.isLoaded('jColorpicker')) {
+              colorpickersliders = $(elem).ColorPickerSliders({
+                color: "rgb(255, 0, 0)",
+                placement: 'bottom',
+                hsvpanel: true,
+                previewformat: 'hex',
+                visible: false
+              });
+
+              elem.on("focus", function () {
+                colorpickersliders.show();
+              });
+              elem.on("blur", function () {
+                //console.log($(elem).val())
+              });
+              $(elem).css({"opacity":1});
+              clearInterval(_renderInterval);
+            }
+          }, 50);
+
+          //setTimeout(function () {
+          //  try {
+          //    colorpickersliders = $(elem).ColorPickerSliders({
+          //      color: "rgb(255, 0, 0)",
+          //      placement: 'bottom',
+          //      hsvpanel: true,
+          //      previewformat: 'hex',
+          //      visible: false
+          //    });
+          //
+          //    elem.on("focus", function () {
+          //      colorpickersliders.show();
+          //    });
+          //    elem.on("blur", function () {
+          //      //console.log($(elem).val())
+          //    });
+          //  } catch (err) {
+          //    setTimeout(function () {
+          //      colorpickersliders = $(elem).ColorPickerSliders({
+          //        color: "rgb(255, 0, 0)",
+          //        placement: 'bottom',
+          //        hsvpanel: true,
+          //        previewformat: 'hex',
+          //        visible: false
+          //      });
+          //    }, 200);
+          //  }
+          //}, 200);
+        }
+      }
+    }])
+    .directive("jTag", ["$compile", "$ocLazyLoad", function ($compile, $ocLazyLoad) {
+      return {
+        restrict: "AC",
+        scope: "$scope",
+        link: function (scope, elem, attrs) {
+          if(elem.attr("data-tags") == "" || !elem.attr("data-tags")) {
+            elem.attr("data-tags", " ");
+            attrs.tags = " ";
+          }
+          elem.attr("ui-jp", "jSelect2");
+          elem.parent().html($compile(elem.parent().html())(scope));
+          elem.attr("multiple", "multiple");
+          $(elem).css({"opacity":0});
+          var _select;
+
+          function removeBlankLi() {
+            var _choices = document.querySelectorAll(".select2-selection__choice"),
+              _len = _choices.length,
+              i = 0,
+              _tempChoice;
+            for(i; i < _len; i++) {
+              _tempChoice = _choices[i];
+              if(_tempChoice.getAttribute("title").trim() == "") {
+                _tempChoice.parentNode.removeChild(_tempChoice);
+              }
+            }
+          }
+
+          function getAllTags() {
+            var _tags = _select.select2("data"),
+              i = 0,
+              _len = _tags.length,
+              _tempTag,
+              res = [];
+            for(i; i < _len; i++) {
+              _tempTag = _tags[i];
+              res.push(_tempTag.text);
+            }
+            return res;
+          }
+
+          var _renderInterval = setInterval(function () {
+            if($ocLazyLoad.isLoaded('jSelect2')) {
+              _select = $(elem).select2({
+                tags: attrs.tags.split(','),
+                placeholder: "请选择",
+                data: attrs.tags.split(','),
+                language: "zh-CN"
+              });
+              _select.val(attrs.tags.split(",")).trigger("change");
+              _select.on("change", function (e) {
+                if($(e.currentTarget).find("option").eq(0).html() == "") {
+                  e.currentTarget.removeChild(e.currentTarget.querySelector("option"));
+                }
+                removeBlankLi();
+
+                $(elem).attr("data-tags", getAllTags().join(","));
+              });
+              //$(elem).css({"opacity":1});
+              clearInterval(_renderInterval);
+            }
+          }, 50);
+
+          //setTimeout(function () {
+          //  try {
+          //    _select = $(elem).select2({
+          //      tags: attrs.tags.split(','),
+          //      placeholder: "Select an option",
+          //      data: attrs.tags.split(','),
+          //      language: "zh-CN"
+          //    });
+          //    _select.val(attrs.tags.split(",")).trigger("change");
+          //    _select.on("change", function (e) {
+          //      if($(e.currentTarget).find("option").eq(0).html() == "") {
+          //        e.currentTarget.removeChild(e.currentTarget.querySelector("option"));
+          //      }
+          //      removeBlankLi();
+          //
+          //      $(elem).attr("data-tags", getAllTags().join(","));
+          //    });
+          //    $(elem).css({"opacity":1});
+          //  } catch (err) {
+          //    setTimeout(function () {
+          //      _select = $(elem).select2({
+          //        tags: attrs.tags.split(','),
+          //        placeholder: "Select an option",
+          //        data: attrs.tags.split(','),
+          //        language: "zh-CN"
+          //      });
+          //      _select.val(attrs.tags.split(",")).trigger("change");
+          //      _select.on("change", function (e) {
+          //        if($(e.currentTarget).find("option").eq(0).html() == "") {
+          //          e.currentTarget.removeChild(e.currentTarget.querySelector("option"));
+          //        }
+          //        removeBlankLi();
+          //
+          //        $(elem).attr("data-tags", getAllTags().join(","));
+          //      });
+          //      $(elem).css({"opacity":1});
+          //    }, 200);
+          //  }
+          //}, 100);
+        }
+      }
+    }])
+    .directive("jSelect", ["$compile", "$ocLazyLoad", function ($compile, $ocLazyLoad) {
+      return {
+        restrict: "AC",
+        scope: "$scope",
+        link: function (scope, elem, attrs) {
+          elem.attr("ui-jp", "jSelect2");
+          elem.parent().html($compile(elem.parent().html())(scope));
+          $(elem).css({"opacity":0});
+          var _select;
+
+          var _renderInterval = setInterval(function () {
+            if($ocLazyLoad.isLoaded('jSelect2')) {
+              _select = $(elem).select2({
+                language: "zh-CN"
+              });
+              $(elem).css({"opacity":1});
+              clearInterval(_renderInterval);
+            }
+          }, 50);
+
+          //setTimeout(function () {
+          //  try {
+          //    _select = $(elem).select2({
+          //      language: "zh-CN"
+          //    });
+          //    $(elem).css({"opacity":1});
+          //  } catch (err) {
+          //    setTimeout(function () {
+          //      _select = $(elem).select2({
+          //        language: "zh-CN"
+          //      });
+          //      $(elem).css({"opacity":1});
+          //    }, 200);
+          //  }
+          //}, 100);
+        }
+      }
+    }])
+    .directive("jAjaxSelect", ["$compile", "$ocLazyLoad", function ($compile, $ocLazyLoad) {
+      return {
+        restrict: "AC",
+        scope: "$scope",
+        link: function (scope, elem, attrs) {
+          elem.attr("ui-jp", "jSelect2");
+          elem.parent().html($compile(elem.parent().html())(scope));
+          $(elem).css({"opacity":0});
+          var _select;
+
+          function formatRepo (repo) {
+            if (repo.loading) return repo.text;
+            return "<div>" + repo.full_name + "</div>";
+          }
+
+          function formatRepoSelection (repo) {
+            return repo.full_name || repo.text;
+          }
+
+          var _renderInterval = setInterval(function () {
+            if($ocLazyLoad.isLoaded('jSelect2')) {
+              _select = $(elem).select2({
+                language: "zh-CN",
+                ajax: {
+                  url: attrs.action,
+                  dataType: "json",
+                  delay: 250,
+                  data: function (params) {
+                    return {
+                      q: params.term,
+                      page: params.page
+                    };
+                  },
+                  processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                      results: data,
+                      pagination: {
+                        more: (params.page * 30) < data.length
+                      }
+                    };
+                  },
+                  cache: true
+                },
+                escapeMarkup: function (markup) {
+                  return markup;
+                },
+                minimumInputLength: 1,
+                templateResult: formatRepo,
+                templateSelection: formatRepoSelection
+              });
+              $(elem).css({"opacity":1});
+              clearInterval(_renderInterval);
+            }
+          }, 50);
+
+          //setTimeout(function () {
+          //  try {
+          //    _select = $(elem).select2({
+          //      language: "zh-CN"
+          //    });
+          //    $(elem).css({"opacity":1});
+          //  } catch (err) {
+          //    setTimeout(function () {
+          //      _select = $(elem).select2({
+          //        language: "zh-CN",
+          //        ajax: {
+          //          url: attrs.action,
+          //          dataType: "json",
+          //          delay: 250,
+          //          data: function (params) {
+          //            return {
+          //              q: params.term,
+          //              page: params.page
+          //            };
+          //          },
+          //          processResults: function (data, params) {
+          //            params.page = params.page || 1;
+          //            return {
+          //              results: data,
+          //              pagination: {
+          //                more: (params.page * 30) < data.length
+          //              }
+          //            };
+          //          },
+          //          cache: true
+          //        },
+          //        escapeMarkup: function (markup) {
+          //          return markup;
+          //        },
+          //        minimumInputLength: 1,
+          //        templateResult: formatRepo,
+          //        templateSelection: formatRepoSelection
+          //      });
+          //      $(elem).css({"opacity":1});
+          //    }, 200);
+          //  }
+          //}, 100);
+        }
+      }
+    }])
+  ;
 
 })(window, document);

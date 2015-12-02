@@ -24,12 +24,19 @@ angular
     'ui.load',
     'ui.jp',
     'angular-loading-bar',
-      'angularFileUpload'
-  ]);
+      'angularFileUpload',
+      "chieffancypants.loadingBar"
+  ])
+    
+.config(function (cfpLoadingBarProvider) {
+    cfpLoadingBarProvider.includeSpinner = true;
+})
+;
 
 angular.element(window).bind('load', function () {
     var onloadedTimeout = setTimeout(function () {
-        hideLoading(true);
+        //hideLoading(true);
+        hideBack();
         clearTimeout(onloadedTimeout);
     }, 600);
 });

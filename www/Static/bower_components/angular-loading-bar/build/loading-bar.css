@@ -37,12 +37,13 @@
   transition: width 350ms;
 
   background: #29d;
+  /*background: lightgrey;*/
   position: fixed;
   z-index: 10002;
   top: 0;
   left: 0;
   width: 100%;
-  height: 2px;
+  height: 3px;
   border-bottom-right-radius: 1px;
   border-top-right-radius: 1px;
 }
@@ -73,10 +74,10 @@
 }
 
 #loading-bar-spinner .spinner-icon {
-  width: 14px;
-  height: 14px;
+  width: 18px;
+  height: 18px;
 
-  border:  solid 2px transparent;
+  border:  solid 3px transparent;
   border-top-color:  #29d;
   border-left-color: #29d;
   border-radius: 10px;

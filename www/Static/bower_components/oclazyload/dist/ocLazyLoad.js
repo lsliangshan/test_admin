@@ -331,6 +331,30 @@
             return regModules;
           },
 
+          isLoaded: function isLoaded(modulesNames) {
+            var moduleLoaded = function moduleLoaded(module) {
+              var isLoaded = regModules.indexOf(module) > -1;
+              if (!isLoaded) {
+                isLoaded = !!moduleExists(module);
+              }
+              return isLoaded;
+            };
+            if (angular.isString(modulesNames)) {
+              modulesNames = [modulesNames];
+            }
+            if (angular.isArray(modulesNames)) {
+              var i, len;
+              for (i = 0, len = modulesNames.length; i < len; i++) {
+                if (!moduleLoaded(modulesNames[i])) {
+                  return false;
+                }
+              }
+              return true;
+            } else {
+              throw new Error('You need to define the module(s) name(s)');
+            }
+          },
+
           // deprecated
           loadTemplateFile: function(paths, params) {
             return filesLoader({files: paths}, params);
