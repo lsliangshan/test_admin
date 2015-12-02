@@ -1,5 +1,4 @@
 'use strict';
-
 /**
  * @ngdoc overview
  * @name app
@@ -32,7 +31,6 @@ angular
     cfpLoadingBarProvider.includeSpinner = true;
 })
 ;
-
 angular.element(window).bind('load', function () {
     var onloadedTimeout = setTimeout(function () {
         //hideLoading(true);

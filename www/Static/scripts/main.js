@@ -105,6 +105,7 @@ angular.module('app')
                     uploader.queue = [];
                     //uploader.removeFromQueue(0);
                     $(".progress").eq(0).html($compile($(".progress").eq(0).html())($scope));
+                    $(".progress").eq(0).find(".progress-bar").eq(0).css({"width": "0%"});
                     console.log($(".progress").eq(0).html())
                 }, 3000);
                 $scope.uploaderInfo = response.data;
