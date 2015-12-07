@@ -197,7 +197,7 @@
                 </li>
                 <li>
                     <a href class="clear no-padding-h" j-dropdown="dropdown" data-animation="am-collapse" data-template="user">
-                        <img src="/Static/images/a0.jpg" alt="..." class="navbar-img pull-right">
+                        <img src="<%=sessionInfo.icon%>" ng-src="{{ uploaderInfo.fileurl }}" style="max-width: 52px; max-height: 52px; width: 52px; height: 52px;" alt="..." class="navbar-img pull-right">
                         <span class="hidden-sm m-l"><%=sessionInfo.username%></span>
                         <b class="caret m-h-xs hidden-sm"></b>
                     </a>

@@ -9,10 +9,10 @@
                     <div class="p-lg bg-white-opacity text-center">
                         <div href class="w-xs inline form-file" style="border-radius: 50%; overflow: hidden; height: 90px; width: 90px;">
                             <input type="file" nv-file-select uploader="uploader">
-                            <img src="/Static/images/a1.jpg" ng-src="{{ uploaderInfo.fileurl }}" style="height: 100%;" class="img-responsive">
+                            <img src="<%=sessionInfo.icon%>" ng-src="{{ uploaderInfo.fileurl }}" style="height: 100%;" class="img-responsive">
                             <!--<i class="ui-icon glyphicon glyphicon-camera" style="top: -45px; color: #E1B020;"></i>-->
                         </div>
-                        <div class="progress" style="margin-bottom: 0; height: 4px; width: 50%; margin-left: auto; margin-right: auto;">
+                        <div class="progress" style="margin-bottom: 0; height: 4px; width: 50%; margin-left: auto; margin-right: auto; background-color: transparent;">
                             <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.queue[0].progress + '%' }"></div>
                         </div>
                         <div class="m-b m-t-sm h2">

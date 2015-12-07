@@ -88,7 +88,7 @@ module.exports = Controller(function () {
         uploadAction: function () {
             var self = this;
             var bImg = this.file('file');
-            return X("Attachment/Attachment").upload(bImg,1).then(function (data) {
+            return X("Attachment/Attachment").upload(bImg,0).then(function (data) {
                 if(!isEmpty(data)) {
                     return self.success("上传成功", data);
                 } else {

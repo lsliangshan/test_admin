@@ -104,10 +104,20 @@ angular.module('app')
                 setTimeout(function () {
                     uploader.queue = [];
                     //uploader.removeFromQueue(0);
-                    $(".progress").eq(0).html($compile($(".progress").eq(0).html())($scope));
-                    $(".progress").eq(0).find(".progress-bar").eq(0).css({"width": "0%"});
-                    console.log($(".progress").eq(0).html())
-                }, 3000);
+                    //console.log(JSON.stringify(response));
+                    if(response.errno > 0) {
+                        alert(response.errmsg);
+                    } else {
+                        $(".progress").eq(0).html($compile($(".progress").eq(0).html())($scope));
+                        $(".progress").eq(0).find(".progress-bar").eq(0).css({"width": "0%"});
+                        $.post("/Public/updateHeadIcon",{
+                            "headicon": response.data.fileurl
+                        }, function (data) {
+                            //alert(JSON.stringify(data));
+                        });
+                    }
+                    //console.log($(".progress").eq(0).html())
+                }, 2000);
                 $scope.uploaderInfo = response.data;
             };
 

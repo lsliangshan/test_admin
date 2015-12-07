@@ -29,8 +29,8 @@ module.exports = Controller("AppFrameController", function () {
     return {
         init: function (http) {
             this.super_("init", http);
-            this.UserModel = D("Admin/User", {db_ext_config:{safe: 1}});
-            //this.UserModel = D("Admin/User");
+            //this.UserModel = D("Admin/User", {db_ext_config:{safe: 1}});
+            this.UserModel = D("Admin/User");
         },
         indexAction: function () {
             return this.deny(403);
@@ -74,7 +74,7 @@ module.exports = Controller("AppFrameController", function () {
             var self = this;
             if(this.isPost()) {
                 var signupInfo = I("", this);
-                return self.UserModel.add({username: signupInfo.username, password: md5(signupInfo.password), email: signupInfo.email}).then(function (id) {
+                return self.UserModel.add({username: signupInfo.username, password: signupInfo.password, email: signupInfo.email}).then(function (id) {
                     if(id) {
                         return self.success("注册成功");
                     } else {
@@ -260,6 +260,26 @@ module.exports = Controller("AppFrameController", function () {
                 }
                 return self.display();
             });
+        },
+        updateHeadIconAction: function () {
+            var self = this;
+            if(self.isPost()) {
+                return self.session("userInfo").then(function (user) {
+                    if(!isEmpty(user)) {
+                        if(user.hasOwnProperty("password")) {
+                            delete user.password;
+                        }
+                        var _headicon = I("headicon", self);
+                        return self.UserModel.where({username: user.username, email: user.email}).update({"icon": _headicon}).then(function (id) {
+                            user.icon = _headicon;
+                            return self.session("userInfo", user).then(function () {
+                                self.assign("sessionInfo", user);
+                                return self.success("更新成功");
+                            });
+                        });
+                    }
+                });
+            }
         },
         homeAction: function () {
             return this.display();
