@@ -48,8 +48,12 @@ module.exports = Controller("AppFrameController", function () {
                             delete user.password;
                         }
 
+                        // 更新last_login_time
+                        self.UserModel.where({email: user.email}).update({"last_login_time": +new Date});
+
                         // 默认登录时不锁定账号
                         user.lockme = 0;
+                        user.last_login_time = +new Date;
 
                         return self.session("userInfo", user).then(function () {
                             return self.session("userInfo").then(function (data) {
@@ -205,8 +209,12 @@ module.exports = Controller("AppFrameController", function () {
                                 delete user.password;
                             }
 
+                            // 更新last_login_time
+                            self.UserModel.where({email: user.email}).update({"last_login_time": +new Date});
+
                             // 默认登录时不锁定账号
                             user.lockme = 0;
+                            user.last_login_time = +new Date;
 
                             return self.session("userInfo", user).then(function () {
                                 //return self.session("userInfo").then(function (data) {
@@ -222,6 +230,29 @@ module.exports = Controller("AppFrameController", function () {
                     if(!isEmpty(user)) {
                         user.lockme = 1;
                         return self.session("userInfo", user).then(function () {
+                            var _lockedTime = (+new Date - user.last_login_time) / 1000;
+                            var _day = 0,
+                                _hour = 0,
+                                _minute = 0,
+                                _second = 0;
+
+                            if(_lockedTime / (60 * 60 * 24) >= 1) {
+                                _day = parseInt(_lockedTime / (60 * 60 * 24));
+                                _lockedTime = parseInt(_lockedTime % (60 * 60 * 24));
+                            }
+                            if(_lockedTime / (60 * 60) >= 1) {
+                                _hour = parseInt(_lockedTime / (60 * 60));
+                                _lockedTime = parseInt(_lockedTime % (60 * 60));
+                            }
+                            if(_lockedTime / 60 >= 1) {
+                                _minute = parseInt(_lockedTime / 60);
+                                _lockedTime = parseInt(_lockedTime % 60);
+                            }
+                            _second = parseInt(_lockedTime);
+
+                            var _out = (_day > 0 ? (_day + "天") : "") + (_hour > 0 ? (_hour + "时") : "") + (_minute > 0 ? (_minute + "分") : "") + (_second > 0 ? (_second + "秒") : "");
+
+                            self.assign("lockedTime", _out);
                             self.assign("sessionInfo", user);
                             return self.display();
                         });

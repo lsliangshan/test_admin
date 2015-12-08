@@ -1,4 +1,11 @@
 <div class="container" style="opacity: 1; -webkit-transform: translate3d(0,0,0); -moz-transform: translate3d(0,0,0); -o-transform: translate3d(0,0,0); transform: translate3d(0,0,0);">
     <pre>这里是首页</pre>
+    <button class="btn btn-primary" id="pushState">push state</button>
     <form name="form" action=""></form>
+    <script>
+        var _pushState = document.querySelector("#pushState");
+        _pushState.addEventListener("click", function () {
+            alert("pushState" in history);
+        }, false);
+    </script>
 </div>

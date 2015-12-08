@@ -223,7 +223,7 @@ angular.module('app')
                 return (/iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/).test(ua);
             }
 
-            $.pjax.defaults.type = 'get';
+            $.pjax && $.pjax.defaults && ($.pjax.defaults.type = 'get');
             $(document).pjax("a[data-pjax]", "#p-container");
             $(document).on("pjax:start", function () {
             });
