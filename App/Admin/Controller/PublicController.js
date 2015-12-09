@@ -80,7 +80,8 @@ module.exports = Controller("AppFrameController", function () {
                 var signupInfo = I("", this);
                 return self.UserModel.add({username: signupInfo.username, password: signupInfo.password, email: signupInfo.email}).then(function (id) {
                     if(id) {
-                        return self.success("注册成功");
+                        return self.success("注册成功", {referer: "/Public/signin"});
+                        //return self.redirect("/Public/signin");
                     } else {
                         return self.error("注册失败");
                     }

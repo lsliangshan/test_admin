@@ -39,7 +39,7 @@
     <div class="m-b text-sm">
       注册一个 <%=appName%> 账号
     </div>
-    <form name="form" action="/Public/signup" method="post">
+    <form name="form" id="">
       <div class="form-group m-b-xs">
         <label class="hide">Name</label>
         <input type="text" name="username" placeholder="您的姓名" class="form-control" ng-model="user.name" required>
@@ -57,7 +57,7 @@
           <input type="checkbox" ng-model="agree" required><i></i> 阅读 <a href>隐私条款</a>
         </label>
       </div>
-      <button type="submit" class="btn btn-info p-h-md m-v-sm">注册</button>
+      <button type="button" data-action="/Public/signup" class="btn btn-info p-h-md m-v-sm">注册</button>
       <p>已有账号? <a href="/Public/signin">登录</a></p>
     </form>
   </div>

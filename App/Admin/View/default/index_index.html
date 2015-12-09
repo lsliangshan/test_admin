@@ -436,6 +436,20 @@
                 }, 500);
             } else {}
         }
+
+        function checkTypeOf(obj) {
+            var _temp = (obj && typeof obj === 'object' && obj.nodeType === 1 && typeof obj.nodeName === 'string');
+            if(obj instanceof jQuery) {
+                // obj是一个jquery实例
+                return 1;
+            } else if(!!_temp) {
+                // obj 是一个DOM实例
+                return 2;
+            } else {
+                // obj 是一个select
+                return 0;
+            }
+        }
     </script>
 </body>
 </html>

@@ -50,9 +50,32 @@ angular.module('app')
                 }
             ];
 
-            $scope.ajaxFormSubmit = function(formId, url, data, callback) {
+            function checkTypeOf(obj) {
+                var _temp = (obj && typeof obj === 'object' && obj.nodeType === 1 && typeof obj.nodeName === 'string');
+                if(obj instanceof jQuery) {
+                    // obj是一个jquery实例
+                    return 1;
+                } else if(!!_temp) {
+                    // obj 是一个DOM实例
+                    return 2;
+                } else {
+                    // obj 是一个select
+                    return 0;
+                }
+            }
+
+            $scope.ajaxFormSubmit = function(form, url, data, callback) {
                 if(url && (typeof url == "string")) {
-                    $("#" + formId).ajaxSubmit({
+                    var target,
+                        _type = checkTypeOf(form);
+                    if(_type == 1) {
+                        target = form;
+                    } else if(_type == 2) {
+                        target = $(form);
+                    } else {
+                        target = $(form);
+                    }
+                    target.ajaxSubmit({
                         //按钮上是否自定义提交地址(多按钮情况)
                         url: url,
                         dataType: 'json',
@@ -242,13 +265,18 @@ angular.module('app')
             // 个人中心资料修改
             // 修改个人资料
             $scope.modifyProfile = function () {
-                $scope.ajaxFormSubmit("profile-form", "/Public/modifyProfile", {}, function (res) {
+                $scope.ajaxFormSubmit("#profile-form", "/Public/modifyProfile", {}, function (res) {
                     $scope.lsAlert(res.errmsg);
                     if(res.data.referer) {
                         location.href = res.data.referer;
                     }
                 });
             };
+
+            // 登录
+            //$scope.signin = function () {
+            //    $scope.ajaxFormSubmit()
+            //}
 
             // 修改密码
             //$scope.modifyPassword = function () {
