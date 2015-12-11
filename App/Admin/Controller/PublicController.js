@@ -24,6 +24,7 @@
  *
  * Created by liangshan on 15/11/18.
  */
+var fs = require("fs");
 module.exports = Controller("AppFrameController", function () {
     "use strict";
     return {
@@ -328,6 +329,19 @@ module.exports = Controller("AppFrameController", function () {
                 this.assign("errmsg", errmsg);
                 return this.display();
             }
+        },
+        lsReadFilesAction: function () {
+            var map = {},
+                content = fs.readFileSync(file, 'ascii'),
+                lines = content.split(/[\r\n]+/);
+
+            lines.forEach(function(line) {
+                // Clean up whitespace/comments, and split into fields
+                var fields = line.replace(/\s*#.*|^\s*|\s*$/g, '').split(/\s+/);
+                map[fields.shift()] = fields;
+            });
+
+            this.define(map);
         }
     }
 });
